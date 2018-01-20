@@ -9,7 +9,7 @@ Para a solução foi imaginado o uso da linguagem `Ruby`, com o suporte do _fram
 
 Inicialmente foi construído uma abstração em termos de OOP. Para melhor viualização foram compostos alguns diagramas UML.
 
-![Interação entre API Webservice e Ruby On Rails](https://github.com/TomazMartins/tea-store/uml/interaction-ror-webservice.png)
+![Interação entre API Webservice e Ruby On Rails](https://github.com/TomazMartins/tea-store/blob/master/uml/interaction-ror-webservice.png)
 
 O diagrama apenas retrata o que foi solictado no documento relativo ao problema:
 
@@ -17,13 +17,13 @@ O diagrama apenas retrata o que foi solictado no documento relativo ao problema:
 2. `webservice` retorna uma resposta do `RoR`;
 3. `RoR` envia um pedido ao `webservice`, para registro.
 
-![Interação com mais detalhes](https://github.com/TomazMartins/tea-store/uml/interaction-more-details.png)
+![Interação com mais detalhes](https://github.com/TomazMartins/tea-store/blob/master/uml/interaction-more-details.png)
 
 Aqui observa-se que, para melhor manutenabilidade e entendimento do projeto, foi preciso criar um novo pacote, entitulado "_requesters_". Nele está contida toda a lógica de requisição e recebimento de respostas do `webservice`.
 
 A interação entre `models`, `controllers` e `views` é a padrão dentro do que já é conhecido em `Ruby On Rails`.
 
-![Diagrama de Classes](https://github.com/TomazMartins/tea-store/uml/class-diagram-models.png)
+![Diagrama de Classes](https://github.com/TomazMartins/tea-store/blob/master/uml/class-diagram-models.png)
 
 Por fim, temos o diagrama de classes que traz a interação e relacionamentos entre as classes contidas no pacote `models`.
 
