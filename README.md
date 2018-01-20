@@ -45,7 +45,7 @@ O diagrama apenas retrata o que foi solicitado no documento relativo ao problema
 
 ![Interação com mais detalhes](https://github.com/TomazMartins/tea-store/blob/master/uml/interaction-more-details.png)
 
-Aqui observa-se que, para melhor manutenabilidade e entendimento do projeto, foi preciso criar um novo pacote, entitulado "_requesters_". Nele está contida toda a lógica de requisição e recebimento de respostas do `webservice`.
+Aqui observa-se que, para melhor manutenabilidade e entendimento do projeto, foi preciso criar um novo pacote, entitulado "_requesters_". Nele está contida toda a lógica de requisição e recebimento de respostas do `webservice`. Isso também garante um dois princípios **SOLID**, de responsabilidade única.
 
 A interação entre `models`, `controllers` e `views` é a padrão dentro do que já é conhecido em `Ruby On Rails`.
 
@@ -66,11 +66,19 @@ A interação com a API ocorre em dois momentos:
 Para cada um destes momentos um diagrama foi elaborado.
 
 #### 3.4.1. Requisição/Recebimento dos Chás
-Esta interação, a princípio, não deveria ocorrer diversas vezes. Apenas uma vez é suficiente, desde que os resultados sejam armazenados em banco de dados e atuallizados periodicamente. Desta forma, além de evitar uma quantidade excessiva de requisições à API, tem-se a oportunidade de manter o sistema em funcionamento, mesmo sem os recursos de internet (_offline_). Atulizações diárias seriam um bom intervalo de tempo.
+Esta interação, a princípio, não deveria ocorrer diversas vezes. Apenas uma vez é suficiente, desde que os resultados sejam armazenados em banco de dados e atuallizados periodicamente. Desta forma, além de evitar uma quantidade excessiva de requisições à API, tem-se a oportunidade de manter o sistema em funcionamento, mesmo sem os recursos de internet (_offline_). Atualizações diárias seriam um bom intervalo de tempo.
 
-Abaixo consta o diarama de sequência que demonstrar a interação para esta operação.
+Abaixo consta o diagrama de sequência que demonstrar a interação para esta operação.
 
 ![DS - Requisição e Recebimento de Chás](https://github.com/TomazMartins/tea-store/blob/master/uml/request-response-tea.png)
+
+Deve-se ressaltar que, para que houvesse o disparo da **requisição**, foi necessário a adição de uma `gem`: `whenever`. Esta `gem` permite trabalhar com o `cron`, de forma a possibilitar o agendamento de tarefas.
+
+1. O sistema, por meio de algum serviço de monitoramento de tempo, como o `cron`, verifica que deve disparar a chamada para uma autalização dos dados relacionados aos chás (`Tea`s). Desta forma, ele invoca a chamada `request_teas()`, que é uma `Task` adicionada ao sitema.
+2. O `requester` dedicado aos Chás, o `TeaRequester`, então invoca o método `request_tea()`, para fazer a requisição ao _webservice_ dos chás. A requisição é feita utilizando a `gem` `faraday`.
+3. O _webservices_ retorna, por meio da chamada ao _endpoint_, os chás disponíveis.
+4. O `TeaRequester` invoca outro método: `update_teas()`. Neste ponto há a necessidade de averiguar se há algum registro na tabela `Teas`. Caso não haja, os chás serão salvos no banco de dados. Caso já existam registros, eles serão apagados e substituídos pelos novos registros. Isso ocorre porque é mais "barato" a simples substituição do que a averiguação de alterações/substituição de dados absoletos.
+5. É invocado o método `save()` da `ActiveRecord` responsável pelos chás. Assim, os dados são salvos no banco de dados e estão prontos para uso.
 
 #### 3.4.2. Fechamento de um Pedido
 
