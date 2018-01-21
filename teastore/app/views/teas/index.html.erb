@@ -1,105 +1,26 @@
 <div id="teas-index">
-  <div class="row">
-    <div class="col s12">
-      <ul class="tabs teal lighten-5">
-        <li class="tab col s3"><a class="active" href="#black-teas">Black Teas</a></li>
-        <li class="tab col s3"><a href="#green-teas">Green Teas</a></li>
-        <li class="tab col s3"><a href="#white-teas">White Teas</a></li>
-        <li class="tab col s3"><a href="#chai-teas">Chai Teas</a></li>
-      </ul>
-    </div>
-    <div class="container">
-      <div id="black-teas" class="col s12">
-        <div class="card">
-          <div class="car-content">
-            <table class="centered stripped">
-              <thead>
-                <th>Name</th>
-              </thead>
-              <tbody>
-                <% @black_teas.each do |tea| %>
-                <tr>
-                  <td><%= tea.name %></td>
-                  <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
-                </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-action">
-          </div>
-        </div>
+  <div id="teas" class="container">
+    <div class="card">
+      <div class="car-content">
+        <table class="centered highlight">
+          <thead>
+            <th>Category</th>
+            <th>Price</th>
+          </thead>
+          <tbody>
+            <% @teas.each do |tea| %>
+            <tr>
+              <td><%= tea.category %></td>
+              <td><%= tea.price %></td>
+              <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
-      <div id="green-teas" class="col s12">
-        <div class="card">
-          <div class="car-content">
-            <table class="centered stripped">
-              <thead>
-                <th>Name</th>
-              </thead>
-              <tbody>
-                <% @green_teas.each do |tea| %>
-                <tr>
-                  <td><%= tea.name %></td>
-                  <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
-                </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-action">
-          </div>
-        </div>
-      </div>
-      <div id="white-teas" class="col s12">
-        <div class="card">
-          <div class="car-content">
-            <table class="centered stripped">
-              <thead>
-                <th>Name</th>
-              </thead>
-              <tbody>
-                <% @white_teas.each do |tea| %>
-                <tr>
-                  <td><%= tea.name %></td>
-                  <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
-                </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-action">
-          </div>
-        </div>
-      </div>
-      <div id="chai-teas" class="col s12">
-        <div class="card">
-          <div class="car-content">
-            <table class="centered stripped">
-              <thead>
-                <th>Name</th>
-              </thead>
-              <tbody>
-                <% @chai_teas.each do |tea| %>
-                <tr>
-                  <td><%= tea.name %></td>
-                  <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-                  <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
-                </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-action">
-          </div>
-        </div>
+      <div class="card-action">
       </div>
     </div>
   </div>

@@ -1,10 +1,10 @@
 class TeasController < ApplicationController
-  before_action :get_teas, only: :index
   before_action :set_tea, only: [:show, :edit, :update, :destroy]
 
   # GET /teas
   # GET /teas.json
   def index
+    @teas = Tea.all
   end
 
   # GET /teas/1
@@ -62,18 +62,11 @@ class TeasController < ApplicationController
   end
 
   private
-    def get_teas
-      @black_teas = BlackTea.all
-      @green_teas = GreenTea.all
-      @white_teas = WhiteTea.all
-      @chai_teas = ChaiTea.all
-    end
-
     def set_tea
       @tea = Tea.find( params[ :id ] )
     end
 
     def tea_params
-      params.require( :tea ).permit( :name, :type )
+      params.require( :tea ).permit( :category, :price )
     end
 end

@@ -1,2 +1,0 @@
-class ChaiTea < Tea
-end

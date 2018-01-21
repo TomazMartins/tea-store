@@ -1,8 +1,17 @@
 <div class="container">
   <div class="card">
     <div class="card-content">
-      <%= simple_form_for @tea.becomes( Tea ) do |form| %>
-        <%= form.input :name, labe: 'Tea Name:', disabled: true %>
+      <%= simple_form_for @tea do |form| %>
+        <div class="row">
+          <div class="col s6">
+            <%= form.input :category, label: 'Tea Category:', disabled: true %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s6">
+            <%= form.input :price, label: 'Tea Price:', disabled: true %>
+          </div>
+        </div>
       <% end %>
     </div>
     <div class="card-action">

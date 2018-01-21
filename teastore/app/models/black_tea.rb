@@ -1,2 +1,0 @@
-class BlackTea < Tea
-end

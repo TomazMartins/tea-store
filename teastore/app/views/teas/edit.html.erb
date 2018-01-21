@@ -1,6 +1,6 @@
 <div class="container">
   <div class="card">
-    <%= simple_form_for @tea.becomes( Tea ) do |form| %>
+    <%= simple_form_for @tea do |form| %>
       <div class="card-content">
         <%= render partial: 'form', locals: { tea: @tea, form: form } %>
       </div>
