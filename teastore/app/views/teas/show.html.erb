@@ -1,14 +1,13 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @tea.name %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @tea.type %>
-</p>
-
-<%= link_to 'Edit', edit_tea_path(@tea) %> |
-<%= link_to 'Back', teas_path %>
+<div class="container">
+  <div class="card">
+    <div class="card-content">
+      <%= simple_form_for @tea.becomes( Tea ) do |form| %>
+        <%= form.input :name, labe: 'Tea Name:', disabled: true %>
+      <% end %>
+    </div>
+    <div class="card-action">
+      <%= link_to 'Edit', edit_tea_path( @tea.id ), class: 'waves-effect waves-light btn' %>
+      <%= link_to 'Back', teas_path, class: 'waves-effect waves-light btn' %>
+    </div>
+  </div>
+</div>
