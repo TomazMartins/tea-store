@@ -12,10 +12,14 @@
           <tbody>
             <% @orders.each do |order| %>
             <tr>
-              <td><%= order.category %></td>
+              <td><%= order.id %></td>
               <td><%=  %></td>
               <td><%= order.total_price %></td>
-              <td><%= order.teas %></td>
+              <td>
+                <% order.teas.each do |tea| %>
+                  <%= "#{ tea.category } #{ tea.quantity }" %>
+                <% end %>
+              </td>
               <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, order_path( order.id ), class: "waves-effect waves-light btn" %></td>
               <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_order_path( order.id ), class: "waves-effect waves-light btn" %></td>
               <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, order_path( order.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121183941) do
+ActiveRecord::Schema.define(version: 20180121184858) do
 
   create_table "orders", force: :cascade do |t|
     t.decimal "total_price"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20180121183941) do
     t.decimal "price"
     t.boolean "is_menu"
     t.integer "order_id"
+    t.integer "quantity"
     t.index ["order_id"], name: "index_teas_on_order_id"
   end
 

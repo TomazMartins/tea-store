@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @teas_menu = Tea.where( is_menu: true )
   end
 
   # GET /orders/1/edit
@@ -69,6 +70,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require( :order ).permit( :total_price )
+      params.require( :order ).permit( :id, :total_price, :client, teas_attributes: [ :category, :price, :quantity, :is_menu] )
     end
 end
