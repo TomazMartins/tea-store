@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121161514) do
+ActiveRecord::Schema.define(version: 20180121183941) do
+
+  create_table "orders", force: :cascade do |t|
+    t.decimal "total_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "teas", force: :cascade do |t|
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "price"
+    t.boolean "is_menu"
+    t.integer "order_id"
+    t.index ["order_id"], name: "index_teas_on_order_id"
   end
 
 end

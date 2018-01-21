@@ -1,0 +1,31 @@
+<div id="order-index">
+  <div id="orders" class="container">
+    <div class="card">
+      <div class="car-content">
+        <table class="centered highlight">
+          <thead>
+            <th>Code</th>
+            <th>Client</th>
+            <th>Total To Pay</th>
+            <th>Ordered Teas</th>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.category %></td>
+              <td><%=  %></td>
+              <td><%= order.total_price %></td>
+              <td><%= order.teas %></td>
+              <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, order_path( order.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_order_path( order.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, order_path( order.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-action">
+      </div>
+    </div>
+  </div>
+</div>

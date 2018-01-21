@@ -4,7 +4,7 @@ class TeasController < ApplicationController
   # GET /teas
   # GET /teas.json
   def index
-    @teas = Tea.all
+    @teas_menu = get_menu
   end
 
   # GET /teas/1
@@ -62,6 +62,9 @@ class TeasController < ApplicationController
   end
 
   private
+    def get_menu
+      Tea.where( is_menu: true )
+    end
     def set_tea
       @tea = Tea.find( params[ :id ] )
     end
