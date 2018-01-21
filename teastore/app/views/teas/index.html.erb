@@ -1,0 +1,27 @@
+<div id="teas-index">
+  <div id="teas" class="container">
+    <div class="card">
+      <div class="car-content">
+        <table class="centered highlight">
+          <thead>
+            <th>Category</th>
+            <th>Price</th>
+          </thead>
+          <tbody>
+            <% @teas.each do |tea| %>
+            <tr>
+              <td><%= tea.category %></td>
+              <td><%= tea.price %></td>
+              <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-action">
+      </div>
+    </div>
+  </div>
+</div>

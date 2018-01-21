@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'simple_form'
+gem 'jquery-rails'
+
 # Whenever is a Ruby gem that provides a clear syntax for writing and deploying cron jobs
 #   Link: <https://github.com/javan/whenever>
 gem 'whenever', require: false

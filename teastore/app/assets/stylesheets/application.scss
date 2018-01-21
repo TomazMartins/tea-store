@@ -1,6 +1,10 @@
 @import "materialize/components/color";
-$primary-color: color('blue', 'lighten-2') !default;
-$secondary-color: color('yellow', 'base') !default;
+$primary-color: color('light-blue', 'darken-4') !default;
+$secondary-color: color('teal', 'base') !default;
 
 @import 'materialize';
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+@import 'navbar';
+@import 'home';
+@import 'teas';
