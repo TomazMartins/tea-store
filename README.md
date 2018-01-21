@@ -51,7 +51,7 @@ A interação entre `models`, `controllers` e `views` é a padrão dentro do que
 
 ### 3.3. Diagrama de Classes
 
-![Diagrama de Classes](https://github.com/TomazMartins/tea-store/blob/master/uml/class-diagram-models.png)
+![Diagrama de Classes](https://github.com/TomazMartins/tea-store/blob/master/uml/class-diagram-models-onlytea.png)
 
 Por fim, temos o diagrama de classes que traz a interação e relacionamentos entre as classes contidas no pacote `models`.
 
