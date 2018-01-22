@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="card">
+    <%= simple_form_for @order do |form| %>
+      <div class="card-content">
+        <%= render partial: 'orders/shared/edit_form', locals: { order: @order, form: form, menu: @teas_menu, ordered_teas: @ordered_teas } %>
+      </div>
+      <div class="card-action">
+        <%= form.submit 'Save', class: 'waves-effect waves-light btn' %>
+        <%= link_to 'Back', orders_path, class: 'waves-effect waves-light btn' %>
+      </div>
+    <% end %>
+  </div>
+</div>
