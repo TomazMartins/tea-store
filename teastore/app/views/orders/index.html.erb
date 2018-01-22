@@ -14,7 +14,7 @@
             <tr>
               <td><%= order.id %></td>
               <td><%=  %></td>
-              <td><%= order.total_price %></td>
+              <td><%= number_to_currency( order.total_price, unit: '$ ' ) %></td>
               <td>
                 <% order.teas.each do |tea| %>
                   <%= "#{ tea.name } ( #{ tea.ordered_quantity } )" %></br>

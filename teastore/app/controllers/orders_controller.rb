@@ -35,9 +35,6 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new( order_params )
 
-    new_teas = sanitilize_order( @order )
-    @order.teas.replace( new_teas )
-
     respond_to do |format|
       if @order.save
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
@@ -54,9 +51,6 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update( order_params )
-        new_teas = @order.teas.to_a.delete_if { |tea| ( tea.ordered_quantity.nil? || tea.ordered_quantity == 0 ) }
-        @order.teas.replace( new_teas )
-
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
@@ -77,12 +71,6 @@ class OrdersController < ApplicationController
   end
 
   private
-    def sanitilize_order( order )
-      order.teas.to_a.delete_if do |tea|
-        tea.ordered_quantity.nil? || tea.ordered_quantity == 0
-      end
-    end
-
     def set_order
       @order = Order.find( params[ :id ] )
     end
