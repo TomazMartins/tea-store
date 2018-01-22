@@ -1,3 +1,14 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#home-index .home-title-card {
+  font-weight: bold;
+  text-align: center;
+  color: #01579b; // light-blue darken-4
+}
+
+#home-index .home-text-card {
+  text-align: center;
+  font-size: 1em;
+}
+
+#home-index .home-link-card {
+  color: #009688; // teal base
+}
