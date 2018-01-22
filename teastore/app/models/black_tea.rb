@@ -1,0 +1,2 @@
+class BlackTea < Tea
+end
