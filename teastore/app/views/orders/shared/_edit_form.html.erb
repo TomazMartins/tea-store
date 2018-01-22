@@ -1,6 +1,6 @@
 <% if order.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+    <h2><%= pluralize( order.errors.count, "error" ) %> prohibited this order from being saved:</h2>
 
     <ul>
     <% order.errors.full_messages.each do |message| %>
@@ -13,24 +13,31 @@
 <table class="highlight centered">
   <thead>
     <th>Tea Type</th>
+    <th>Name</th>
     <th>Price</th>
+    <th>Stocked</th>
     <th>Quantity</th>
-    <th></th>
   </thead>
   <tbody>
     <% menu.each do |tea| %>
       <tr>
-        <td><%= tea.category %></td>
-        <td><%= number_to_currency( tea.price, unit: 'R$ ' ) %></td>
+        <td><%= tea.type %></td>
+        <td><%= tea.name %></td>
+        <td><%= number_to_currency( tea.price, unit: '$ ' ) %></td>
+        <td><%= tea.stock_quantity %></td>
         <td>
           <%= form.fields_for :teas, order.teas.build do |builder| %>
-            <%= builder.hidden_field :category, value: tea.category %>
+            <%= builder.hidden_field :name, value: tea.name %>
+            <%= builder.hidden_field :type, value: tea.type %>
             <%= builder.hidden_field :price, value: tea.price %>
+            <%= builder.hidden_field :made_in, value: tea.made_in %>
+            <%= builder.hidden_field :steeping_time, value: tea.steeping_time %>
+            <%= builder.hidden_field :drink_with_milk, value: tea.drink_with_milk %>
+            <%= builder.hidden_field :stock_quantity, value: tea.stock_quantity %>
             <%= builder.hidden_field :is_menu, value: false %>
             <div class="row">
-              <div class="col s4"></div>
-              <div class="col s3">
-                <%= builder.number_field :quantity, min: 0, max: 99, value: get_quantity( ordered_teas, tea ) %>
+              <div class="col s6">
+                <%= builder.number_field :ordered_quantity, min: 0, max: tea.stock_quantity, value: get_quantity( ordered_teas, tea ) %>
               </div>
             </div>
           <% end %>

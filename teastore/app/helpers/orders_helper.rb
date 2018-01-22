@@ -3,8 +3,8 @@ module OrdersHelper
     quantity = 0
 
     ordered_teas.to_a.each do |tea|
-      if( tea.category == compared_tea.category )
-        quantity = tea.quantity
+      if( tea.name == compared_tea.name )
+        quantity = tea.ordered_quantity
       end
     end
 

@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new( order_params )
 
-    new_teas = @order.teas.to_a.delete_if{ |tea| ( tea.quantity.nil? || tea.quantity == 0 ) }
+    new_teas = sanitilize_order( @order )
     @order.teas.replace( new_teas )
 
     respond_to do |format|
@@ -54,7 +54,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update( order_params )
-        new_teas = @order.teas.to_a.delete_if { |tea| ( tea.quantity.nil? || tea.quantity == 0 ) }
+        new_teas = @order.teas.to_a.delete_if { |tea| ( tea.ordered_quantity.nil? || tea.ordered_quantity == 0 ) }
         @order.teas.replace( new_teas )
 
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
@@ -77,13 +77,17 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def sanitilize_order( order )
+      order.teas.to_a.delete_if do |tea|
+        tea.ordered_quantity.nil? || tea.ordered_quantity == 0
+      end
+    end
+
     def set_order
       @order = Order.find( params[ :id ] )
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require( :order ).permit( :id, :total_price, :client, teas_attributes: [ :category, :price, :quantity, :is_menu] )
+      params.require( :order ).permit( :id, :total_price, :client, teas_attributes: [ :name, :type, :price, :made_in, :steeping_time, :drink_with_milk, :stock_quantity,  :ordered_quantity, :is_menu] )
     end
 end
