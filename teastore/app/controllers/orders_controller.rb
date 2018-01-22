@@ -20,12 +20,23 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+    @teas_menu = Tea.where( is_menu: true )
+
+    @ordered_teas = []
+    @order.teas.each do |tea|
+      @ordered_teas << tea
+    end
+
+    @order.teas.clear
   end
 
   # POST /orders
   # POST /orders.json
   def create
     @order = Order.new( order_params )
+
+    new_teas = @order.teas.to_a.delete_if{ |tea| ( tea.quantity.nil? || tea.quantity == 0 ) }
+    @order.teas.replace( new_teas )
 
     respond_to do |format|
       if @order.save
@@ -43,6 +54,9 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update( order_params )
+        new_teas = @order.teas.to_a.delete_if { |tea| ( tea.quantity.nil? || tea.quantity == 0 ) }
+        @order.teas.replace( new_teas )
+
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else

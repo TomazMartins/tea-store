@@ -1,0 +1,41 @@
+<% if order.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+    <ul>
+    <% order.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<table class="highlight centered">
+  <thead>
+    <th>Tea Type</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% menu.each do |tea| %>
+      <tr>
+        <td><%= tea.category %></td>
+        <td><%= number_to_currency( tea.price, unit: 'R$ ' ) %></td>
+        <td>
+          <%= form.fields_for :teas, order.teas.build do |builder| %>
+            <%= builder.hidden_field :category, value: tea.category %>
+            <%= builder.hidden_field :price, value: tea.price %>
+            <%= builder.hidden_field :is_menu, value: false %>
+            <div class="row">
+              <div class="col s4"></div>
+              <div class="col s3">
+                <%= builder.number_field :quantity, min: 0, max: 99, value: get_quantity( ordered_teas, tea ) %>
+              </div>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
