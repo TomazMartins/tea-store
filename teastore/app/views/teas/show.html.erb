@@ -1,15 +1,29 @@
 <div class="container">
   <div class="card">
     <div class="card-content">
-      <%= simple_form_for @tea do |form| %>
+      <%= simple_form_for @tea.becomes( Tea ) do |form| %>
         <div class="row">
           <div class="col s6">
-            <%= form.input :category, label: 'Tea Category:', disabled: true %>
+            <%= form.input :name, label: 'Tea Name:', disabled: true %>
+          </div>
+          <div class="col s6">
+            <%= form.input :price, label: 'Tea Price:', disabled: true %>
           </div>
         </div>
         <div class="row">
           <div class="col s6">
-            <%= form.input :price, label: 'Tea Price:', disabled: true %>
+            <%= form.input :made_in, label: 'Origin Country:', disabled: true %>
+          </div>
+          <div class="col s6">
+            <%= form.input :steeping_time, label: 'Steeping Time:', disabled: true %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s6">
+            <%= form.input :drink_with_milk?, label: 'Can Drink With Milk?:', disabled: true %>
+          </div>
+          <div class="col s6">
+            <%= form.input :stock_quantity, label: 'Stocked Quantity:', disabled: true %>
           </div>
         </div>
       <% end %>

@@ -16,17 +16,17 @@
         <h5 class="subheader">Order's Teas</h5>
         <table class="highlight centered">
           <thead>
-            <th>Tea Type</th>
+            <th>Tea Name</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>Ordered Quantity</th>
             <th></th>
           </thead>
           <tbody>
             <% @order.teas.each do |tea| %>
               <tr>
-                <td><%= tea.category %></td>
-                <td><%= number_to_currency( tea.price, unit: 'R$ ' ) %></td>
-                <td><%= tea.quantity %></td>
+                <td><%= tea.name %></td>
+                <td><%= number_to_currency( tea.price, unit: '$ ' ) %></td>
+                <td><%= tea.ordered_quantity %></td>
               </tr>
             <% end %>
           </tbody>

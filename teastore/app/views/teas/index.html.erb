@@ -1,32 +1,20 @@
 <div id="teas-index">
-  <div id="teas" class="container">
-    <div class="card">
-      <div class="car-content">
-        <table class="centered highlight">
-          <thead>
-            <th>Category</th>
-            <th>Price</th>
-          </thead>
-          <tbody>
-            <% @teas_menu.each do |tea| %>
-            <tr>
-              <td><%= tea.category %></td>
-              <td><%= number_to_currency( tea.price, unit: 'R$ ' ) %></td>
-              <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-              <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
-              <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-      <div class="card-action">
-        <div class="row">
-          <div class="col s12">
-            <%= link_to 'New Tea', new_tea_path, class: "waves-effect waves-light btn" %> <%= link_to 'Back To Home', home_path, class: "waves-effect waves-light btn" %>
-          </div>
-        </div>
-      </div>
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs teal lighten-5">
+        <li class="tab col s3"><a class="active" href="#black-teas">Black Teas</a></li>
+        <li class="tab col s2"><a href="#green-teas">Green Teas</a></li>
+        <li class="tab col s2"><a href="#white-teas">White Teas</a></li>
+        <li class="tab col s2"><a href="#chai-teas">Chai Teas</a></li>
+        <li class="tab col s3"><a href="#oolong-teas">Oolong Teas</a></li>
+      </ul>
     </div>
+  </div>
+  <div id="teas" class="container">
+    <%= render partial: 'teas/shared/index_black_tea' %>
+    <%= render partial: 'teas/shared/index_green_tea' %>
+    <%= render partial: 'teas/shared/index_white_tea' %>
+    <%= render partial: 'teas/shared/index_chai_tea' %>
+    <%= render partial: 'teas/shared/index_oolong_tea' %>
   </div>
 </div>

@@ -12,11 +12,25 @@
 
 <div class="row">
   <div class="col s6">
-    <%= form.input :category, label: 'Tea Category:' %>
+    <%= form.input :name, label: 'Tea Name:' %>
+  </div>
+  <div class="col s6">
+    <%= form.input :price, label: 'Tea Price:' %>
   </div>
 </div>
 <div class="row">
   <div class="col s6">
-    <%= form.input :price, label: 'Tea Price:' %>
+    <%= form.input :made_in, label: 'Origin Country:' %>
+  </div>
+  <div class="col s6">
+    <%= form.input :steeping_time, label: 'Steeping Time:' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col s6">
+    <%= form.input :drink_with_milk?, label: 'Can Drink With Milk?:' %>
+  </div>
+  <div class="col s6">
+    <%= form.input :stock_quantity, label: 'Stocked Quantity:' %>
   </div>
 </div>

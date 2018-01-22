@@ -17,7 +17,7 @@
               <td><%= order.total_price %></td>
               <td>
                 <% order.teas.each do |tea| %>
-                  <%= "#{ tea.category } ( #{ tea.quantity } )" %></br>
+                  <%= "#{ tea.name } ( #{ tea.ordered_quantity } )" %></br>
                 <% end %>
               </td>
               <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, order_path( order.id ), class: "waves-effect waves-light btn" %></td>

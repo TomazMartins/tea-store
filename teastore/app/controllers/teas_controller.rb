@@ -1,10 +1,10 @@
 class TeasController < ApplicationController
+  before_action :get_teas, only: [:index]
   before_action :set_tea, only: [:show, :edit, :update, :destroy]
 
   # GET /teas
   # GET /teas.json
   def index
-    @teas_menu = get_menu
   end
 
   # GET /teas/1
@@ -62,9 +62,14 @@ class TeasController < ApplicationController
   end
 
   private
-    def get_menu
-      Tea.where( is_menu: true )
+    def get_teas
+      @black_teas = BlackTea.where( is_menu: true )
+      @green_teas = GreenTea.where( is_menu: true )
+      @white_teas = WhiteTea.where( is_menu: true )
+      @chai_teas = ChaiTea.where( is_menu: true )
+      @oolong_teas = OolongTea.where( is_menu: true )
     end
+
     def set_tea
       @tea = Tea.find( params[ :id ] )
     end

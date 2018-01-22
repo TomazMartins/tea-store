@@ -1,0 +1,2 @@
+class WhiteTea < Tea
+end

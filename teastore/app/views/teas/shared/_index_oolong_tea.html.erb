@@ -1,0 +1,38 @@
+<div id="oolong-teas" class="col s12">
+  <div class="card">
+    <div class="car-content">
+      <table class="centered stripped">
+        <thead>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Origin Country</th>
+          <th>Steeping Time</th>
+          <th>With Milk</th>
+          <th>Stocked Quantity</th>
+        </thead>
+        <tbody>
+          <% @oolong_teas.each do |tea| %>
+            <tr>
+              <td><%= tea.name %></td>
+              <td><%= number_to_currency( tea.price, unit: '$ ' ) %></td>
+              <td><%= tea.made_in %></td>
+              <td><%= tea.steeping_time %></td>
+              <td><%= ( tea.drink_with_milk ? 'yes' : 'no' ) %></td>
+              <td><%= tea.stock_quantity %></td>
+              <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_tea_path( tea.id ), class: "waves-effect waves-light btn" %></td>
+              <td><%= link_to '<i class="material-icons">delete</i>'.html_safe, tea_path( tea.id ), method: :delete, data: { confirm: 'Are you sure?' }, class: "waves-effect waves-light btn" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-action">
+      <div class="row">
+        <div class="col s12">
+          <%= link_to 'New Tea', new_tea_path, class: "waves-effect waves-light btn" %> <%= link_to 'Back To Home', home_path, class: "waves-effect waves-light btn" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
