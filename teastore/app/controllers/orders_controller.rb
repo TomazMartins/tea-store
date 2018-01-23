@@ -44,6 +44,18 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+
+        converter = OrderConverter.new
+        json = converter.to_json( @order )
+
+        puts "Initiazing Connection with Server......"
+        puts "JSON was passed: #{ json }"
+
+        requester = OrderRequester.new
+        result = requester.send_order( json )
+
+        puts "Result of NET::HTTP operation: #{ result }"
+
         format.html { redirect_to client_orders_url( @order.client.id ), notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
