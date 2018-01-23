@@ -1,4 +1,15 @@
 <div id="client-index">
+  <div id-"client-search" class="container">
+    <div class="card">
+      <div class="card-content">
+        <%= form_tag( clients_path, method: 'get' ) do %>
+          <%= text_field_tag :name, params[ :name ] %>
+          <%= submit_tag 'Search', name: nil, class: "waves-effect waves-light btn" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
   <div id="clients" class="container">
     <div class="card">
       <div class="car-content">
@@ -8,6 +19,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Country</th>
+            <th>Make Order</th>
             <th>Orders</th>
           </thead>
           <tbody>
@@ -17,6 +29,7 @@
               <td><%= client.name %></td>
               <td><%= client.email %></td>
               <td><%= client.country %></td>
+              <td><%= link_to '<i class="material-icons">add</i>'.html_safe, new_client_order_path( client.id ), class: "waves-effect waves-light btn" %></td>
               <td><%= link_to '<i class="material-icons">shopping_basket</i>'.html_safe, client_orders_path( client.id ), class: "waves-effect waves-light btn" %></td>
               <td><%= link_to '<i class="material-icons">visibility</i>'.html_safe, client_path( client.id ), class: "waves-effect waves-light btn" %></td>
               <td><%= link_to '<i class="material-icons">edit</i>'.html_safe, edit_client_path( client.id ), class: "waves-effect waves-light btn" %></td>

@@ -2,6 +2,8 @@ class TeaConverter
   include Converter
 
   def to_json( tea )
+    tea.id = Tea.find_by_name( tea.name ).id
+
     tea = tea.attributes.except( 'made_in', 'stock_quantity', 'drink_with_milk', 'name', 'type',
         'created_at', 'updated_at', 'price', 'order_id', 'is_menu', 'steeping_time' )
 

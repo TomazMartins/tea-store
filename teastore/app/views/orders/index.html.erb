@@ -5,7 +5,6 @@
         <table class="centered highlight">
           <thead>
             <th>Code</th>
-            <th>Client</th>
             <th>Total To Pay</th>
             <th>Ordered Teas</th>
           </thead>
@@ -13,7 +12,6 @@
             <% @orders.each do |order| %>
             <tr>
               <td><%= order.id %></td>
-              <td><%= order.client.name %></td>
               <td><%= number_to_currency( order.total_price, unit: '$ ' ) %></td>
               <td>
                 <% order.teas.each do |tea| %>
