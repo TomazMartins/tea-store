@@ -4,7 +4,8 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    @origin_client = Client.find( params[ :client_id ] )
+    @orders = Order.where( client_id: params[ :client_id ] )
   end
 
   # GET /orders/1
@@ -14,7 +15,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
+    @origin_client = Client.find( params[ :client_id ] )
     @order = Order.new
+    @order.client = @origin_client
+
     @teas_menu = Tea.where( is_menu: true )
   end
 
@@ -33,11 +37,14 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+    @origin_client = Client.find( params[ :client_id ] )
+
     @order = Order.new( order_params )
+    @order.client = @origin_client
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.html { redirect_to client_orders_url( @order.client.id ), notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }
@@ -51,7 +58,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update( order_params )
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
+        format.html { redirect_to client_orders_url( @order.client.id ), notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit }
@@ -65,7 +72,7 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+      format.html { redirect_to client_orders_url( @order.client.id ), notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

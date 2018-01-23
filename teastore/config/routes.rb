@@ -6,6 +6,4 @@ Rails.application.routes.draw do
   resources :clients do
     resources :orders, name_prefix: 'client_'
   end
-
-  resources :orders
 end
