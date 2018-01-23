@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  resources :orders
   root to: 'home#index', as: :home
 
   resources :teas
+
+  resources :clients do
+    resources :orders, name_prefix: 'client_'
+  end
+
+  resources :orders
 end
