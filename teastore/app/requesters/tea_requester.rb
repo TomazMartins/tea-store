@@ -1,5 +1,4 @@
 require 'net/http'
-require 'ostruct'
 require 'uri'
 
 class TeaRequester
@@ -9,30 +8,17 @@ class TeaRequester
     uri = URI.parse( "#{BASE_URI}/available-teas" )
 
     response = request( uri )
-
-    convert_tea_from( response )
+    response.body
   end
 
   private
-    def convert_teas_from( json )
-      json_object = JSON.parse( json, object_class: OpenStruct )
+  def request( uri )
+    request = Net::HTTP::Get.new( uri )
+    request[ "Authorization" ] = 'Token Bandolim@M821912212ejadsa@023'
 
-      teas = []
-
-      json_object.each do |object|
-        teas << Tea.new( category: object.category, price: object.price, is_menu: true )
-      end
-
-      teas
+    response = Net::HTTP.start( uri.host, uri.port, use_ssl: uri.scheme == 'https' ) do |http|
+      http.request( request )
     end
-
-    def request( uri )
-      http = Net::HTTP.new( uri.host, uri.port )
-      http.use_ssl = true
-
-      request = Net::HTTP::Get.new( uri )
-      response = http.request( request )
-
-      response.body
-    end
+    response
+  end
 end

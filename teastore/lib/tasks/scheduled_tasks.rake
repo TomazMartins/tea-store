@@ -1,10 +1,13 @@
 namespace :scheduled_taks do
   task request_teas: :environment do
-    tea_requester = TeaRequester.new
-    teas = tea_requester.request_teas
+    Tea.destroy_all
 
-    teas.each do |tea|
-      tea.save
-    end
+    tea_requester = TeaRequester.new
+    teas_json = tea_requester.request_teas
+
+    tea_converter = TeaConverter.new
+    teas_hash = tea_converter.hash_from_json( teas_json )
+
+    Tea.create( teas_hash )
   end
 end
