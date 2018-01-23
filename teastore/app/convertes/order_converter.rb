@@ -5,14 +5,25 @@ class OrderConverter
     tea_conveter = TeaConverter.new
 
     teas = order.teas
-    converted_teas = []
+    converted_teas = "["
 
     teas.each do |tea|
       converted_teas << tea_conveter.to_json( tea )
     end
 
+    converted_teas << "]"
 
-    ActiveSupport::JSON.encode( order )
+    client_converter = ClientConverter.new
+    client = order.client
+    converted_client = client_converter.to_json( client )
+
+    order = "{client:"
+    order << converted_client
+    order << ", teas:"
+    order << converted_teas
+    order << "}"
+
+    order
   end
 
   def from_json( json )

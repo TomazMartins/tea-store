@@ -1,3 +1,14 @@
+Client.create([
+  {name: "Moacyr Marques Brólo", email: "moacyr@client.com", country: "Brazil"},
+  {name: "Ademberg Taborda", email: "ademberg@client.com", country: "England"},
+  {name: "Edberto Elias Mury", email: "edberto@client.com", country: "England"},
+  {name: "Carlos Eduardo Bastos", email: "carlos@client.com", country: "Brazil"},
+  {name: "Claúdia de Oliveira", email: "claudia@client.com", country: "EUA"},
+  {name: "Bruna Rodrigues da Silva", email: "bruna@client.com", country: "Brazil"},
+  {name: "Andressa Martins da Silva", email: "andressa@client.com", country: "EUA"},
+  {name: "Regina Celia dos Santos", email: "regina@client.com", country: "Chile"},
+  {name: "Thiago Carneiro Martins", email: "thiago@client.com", country: "Chile"},
+])
 # BlackTea.create([
 #   {
 #     name: 'King Williams', price: 12.30, made_in: 'England',
