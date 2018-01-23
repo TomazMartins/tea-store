@@ -2,7 +2,12 @@ class TeaConverter
   include Converter
 
   def to_json( tea )
-    ActiveSupport::JSON.encode( tea )
+    tea = tea.attributes.except( 'made_in', 'stock_quantity', 'drink_with_milk', 'name', 'type',
+        'created_at', 'updated_at', 'price', 'order_id', 'is_menu', 'steeping_time' )
+
+    tea = ActiveSupport::JSON.encode( tea )
+
+    tea.gsub( 'ordered_quantity', 'quantity' )
   end
 
   def from_json( json )

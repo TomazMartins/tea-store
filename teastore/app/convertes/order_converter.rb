@@ -2,7 +2,17 @@ class OrderConverter
   include Converter
 
   def to_json( order )
-    ActiveSupport::JSON.encode( tea )
+    tea_conveter = TeaConverter.new
+
+    teas = order.teas
+    converted_teas = []
+
+    teas.each do |tea|
+      converted_teas << tea_conveter.to_json( tea )
+    end
+
+
+    ActiveSupport::JSON.encode( order )
   end
 
   def from_json( json )
