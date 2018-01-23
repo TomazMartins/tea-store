@@ -5,6 +5,7 @@ class TeasController < ApplicationController
   # GET /teas
   # GET /teas.json
   def index
+    request_teas
   end
 
   # GET /teas/1
@@ -68,6 +69,26 @@ class TeasController < ApplicationController
       @white_teas = WhiteTea.where( is_menu: true )
       @chai_teas = ChaiTea.where( is_menu: true )
       @oolong_teas = OolongTea.where( is_menu: true )
+    end
+
+    def request_teas
+      tea_requester = TeaRequester.new
+      teas_json = tea_requester.request_teas
+
+      tea_converter = TeaConverter.new
+
+      teas_hash = tea_converter.hash_from_json( teas_json )
+      teas_hash.each do |tea|
+        tea[ 'is_menu' ] = true
+      end
+
+      if Tea.all.size.equal? 0
+        Tea.create( teas_hash )
+      else
+        teas_hash.each do |tea|
+          Tea.update( tea[ 'id' ], tea )
+        end
+      end
     end
 
     def set_tea

@@ -5,6 +5,8 @@ class Order < ApplicationRecord
   has_many :teas
   accepts_nested_attributes_for :teas
 
+  belongs_to :client
+
   def calculate_total_price
     total_price = 0
 
