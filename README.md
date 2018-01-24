@@ -205,7 +205,7 @@ Abaixo consta o diagrama de sequência que demonstra a interação para esta ope
 Na solução imaginada uma classe seria responsável pela consulta às **regras de negócio**. Pode-se atribuir o nome de `TeaRecommenderer`. E, além disso, o uso do padrão de projeto **Strategy Pattern**. Vamos aos diagramas!
 Com a adição da class `TeaRecommenderer` o diagrama de pacotes ficaria assim:
 
-![pacotes - com reomendação](https://github.com/TomazMartins/tea-store/blob/master/uml/package-plus-recommenderer.png)
+![pacotes - com reomendação](https://github.com/TomazMartins/tea-store/blob/master/uml/packages-plus-recommenderer.png)
 
 Na solução, uma `interface/abstract class` seria criada, contendo o método `recommender_tea()`. Para cada uma das **regras de negócio** um `Strategy` seria elaborada, na forma de uma nova classe que implementaria a `interface/abstract class`. Cada classe implementaria o método `recommender_tea()` à sua maneira, de forma a estar responder corretamente aos critérios da estratégia. Em linhas gerais, uma consulta ao banco de dados com argumentos particulares a cada regra de negócio.
 
