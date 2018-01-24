@@ -44,7 +44,7 @@ O texto traz as seguintes regras explícitas para os chás (`Tea`):
 - Chais são bons acompanhando refeições;
 ```
 
-Estas regras são estabelecidas para que possam ser consultadas durante a recomendação de chás. Inicialmente, pensou-se em atribuir para cada chá (`Tea`) recuperado da API uma descrição, contendo informações relativas à estas regras, para que podessem ser consultadas. Em um segundo momento percebeu-se que a consulta por texto seria tediosa. Surgiu então um novo conceito: armazenar as regras em um **dicionário**, atribuindo a cada regra, um código numérico. Este código numérico seria atribuído a cada chá (`Tea`), de forma que poderíamos consultar as regras pela referência numérica.
+Estas regras são estabelecidas para que possam ser consultadas durante a recomendação de chás. Para isto pensou-se em criar uma "central", que teria acesso a todas as regras de negócio referentes aos chás e que podesse decidir quais chás seriam mais indicados para cada caso. A partir de consultas ao banco de dados, selecionaria-se os chs mais indicados para cada caso.
 
 Uma outra regra de negócio, esta implícita na documentação, é que o frente de caixa (`Cashier`) **não deve** ter acesso à operações sobre os chás (`Tea`), com exeção à **consulta**. Na medida em que as chás (`Teas`) são recuperados a partir do `webservice`, não há porquê permitir que ele tenha condições de criar novos chás (`Tea`), editá-los ou mesmo destruí-los.
 
@@ -52,6 +52,7 @@ Uma outra regra de negócio, esta implícita na documentação, é que o frente 
 Os requisitos foram dispostos no formato de _user stories_. Estes requisitos foram convertidos em _issues_ e foram utilizados os próprios recursos da plataforma do **GitHub** para visualização e manejo dos mesmos, pois a manutenção de um ambiente de desenvolvimento contendo o máximo de recursos relativos ao projeto em um só lugar facilita a utilização, manutenção e atualização destes recursos.
 
 A partir da documentação recebida, podesse derivar os seguintes requisitos:
+
 **Observação:** o termo **Manter** é utilizado como uma referência ao _CRUD_.
 
 ```
@@ -100,7 +101,7 @@ Fazer Venda/Fechar Pedido (Order)
  que haja o registro da mesma e a venda do produto."
 ```
 
-Algumas _tech stories_ também foram derivadas, a partir das necessidades trazidas pelas _ user stories_. São elas:
+Algumas _tech stories_ também foram derivadas, a partir das necessidades trazidas pelas _user stories_. São elas:
 
 ```
 Requirir do Webservice informações sobre os chás
@@ -147,11 +148,11 @@ O diagrama apenas retrata o que foi solicitado no documento relativo ao problema
 
 ### 3.3. Interação entre os pacotes e o `webservice`
 
-![Interação com mais detalhes](https://github.com/TomazMartins/tea-store/blob/master/uml/interaction-more-details.png)
+![Interação com mais detalhes](https://github.com/TomazMartins/tea-store/blob/master/uml/packages-interaction.png)
 
 Aqui observa-se que, para melhor manutenabilidade e entendimento do projeto, foi preciso criar dois novos pacotes, entitulados _requesters_ e _convertes_. Neles está contida toda a lógica de requisição e recebimento de respostas do `webservice` e a lógica para a transformação entre objectos `Ruby` e `JSON` (da forma como o `webservice` espera), respectivamente. Isso também garante um dois princípios **SOLID**, de responsabilidade única.
 
-A interação entre `models`, `controllers` e `views` é a padrão dentro do que já é conhecido em `Ruby On Rails`, utilizando-se do padro arquitetural `MVC`.
+A interação entre `models`, `controllers` e `views` é a padrão dentro do que já é conhecido em `Ruby On Rails`, utilizando-se do padrão arquitetural `MVC`.
 
 ### 3.4. Diagrama de Classes
 
@@ -176,14 +177,12 @@ Abaixo consta o diagrama de sequência que demonstra a interação para esta ope
 
 ![DS - Requisição e Recebimento de Chás](https://github.com/TomazMartins/tea-store/blob/master/uml/request-response-tea.png)
 
-Deve-se ressaltar que, para que houvesse o disparo da **requisição**, foi necessário a adição de uma `gem`: [`whenever`][whenever]. Esta `gem` permite trabalhar com o `cron`, de forma a possibilitar o agendamento de tarefas.
-
 1. O frente de caixa (`Cashier`) pretende consultar os chás (`Tea`) disponíveis na loja, então aciona a tela para ver **todos** os chás (`Tea`);
 2. A a solicitação para ver todos os Chás (`Tea`) é entendida pela aplicação, que envia uma solicitação à `TeaController`, para acessar a `action` `index()`;
-3. Pela `action` `index` a controller inicia o processo de requisição dos Chás (`Tea`), a partir da chamada do método `request_tea()`, de um objeto especializado neste tipo de chamada, o `TEaRequester`;
+3. Pela `action` `index` a _controller_ inicia o processo de requisição dos Chás (`Tea`), a partir da chamada do método `request_tea()`, de um objeto especializado neste tipo de chamada, o `TeaRequester`;
 4. O `TeaRequester` abre uma requisição ao `webservice`, que responde com um objeto no formato `JSON`. O `TeaRequester`, então, retorna este objeto à `TeaController`;
-5. Como a aplicação não sabe lidar com objetos `JSON`, a controller faz uma chamada ao método `hash_from_json` a um objeto `TeaConverter`, especializado na conversão;
-6. `TeaConverter` retorna então uma `hash` à controller. Foi escolhido a transformação em uma `hash`, na medida em que desejasse criar múltiplos objetos ao mesmo tempo. Para isto, faz-se uso de uma `hash` como argumento para a `ActiveRecord`. A `TeaController` chama então o método `create()`;
+5. Como a aplicação não sabe lidar com objetos `JSON`, a _controller_ faz uma chamada ao método `hash_from_json` a um objeto `TeaConverter`, especializado na conversão;
+6. `TeaConverter` retorna então uma `hash` à _controller_. Foi escolhido a transformação em uma `hash`, na medida em que desejasse criar múltiplos objetos ao mesmo tempo. Para isto, faz-se uso de uma `hash` como argumento para a `ActiveRecord`. A `TeaController` chama então o método `create()`;
 7. A modelo `Tea` então invoca o método `save()`, para armazenar os dados no banco de dados, que por sua vez retorna que os dados foram salvos com sucesso. Esta informação é passado então ao frente de caixa (`Cashier`).
 
 #### 3.5.2. Fechamento de um Pedido
@@ -193,15 +192,31 @@ Abaixo consta o diagrama de sequência que demonstra a interação para esta ope
 
 ![DS - Fechamento de um Pedido](https://github.com/TomazMartins/tea-store/blob/master/uml/close-order.png)
 
-1. O frente de caixa (`Cashier`) abre um novo pedido, por meio da chamada. Para isso, ele acessa a página '/orders/new' (`new_order_path`).
+1. O frente de caixa (`Cashier`) abre um novo pedido, por meio da chamada.
 2. A `action` `new()` invocada abre o formulário, onde o `Cashier` passa os parâmetros para a criação de um novo pedido (`Order`).
 3. Com a submissão do formulário, o sistema invoca a `action` `create()`.
-4. Devido a chamada anterior, o pedido (`Order`) é então salvo no banco de dados, pela chamada `save()`. Isso desencadeia o retorno de que o pedido foi salvo com sucesso no sistema.
-5. Com o pedido salvo no banco de dados, a `OrderController` faz uma chamada ao `OrderRequester`, por meio do método `send_order()`. Assim, faz-se uma busca do último pedido (`Order`) salvo no banco de dados e passa-o como parâmetro para a requisição.
-6. `OrderRequester` faz então uma requisição à `API`, por meio da chamada de `send_order()`. Isso acessa o _endpoint_ responsável por receber o pedido, retornando como sucesso a operação.
+4. Devido a chamada anterior, o pedido (`Order`) é então salvo no banco de dados, pela chamada `save()`. Isso desencadeia uma mensagem de retorno de que o pedido foi salvo com sucesso no sistema.
+5. Com o pedido salvo no banco de dados, a `OrderController` faz uma chamada ao `OrderConverter`, por meio do método `to_json()`, afim de transformar o objeto, previamente salvo no banco de dados, em um objeto `JSON`.
+6. O objeto `JSON`, resultado da conversão, É então inserido como argumento na chamada dométodo `send_order()`, do `OrderRequester`, que faz uma requisição à `API`, acessando o _endpoint_ de recebimento de pedidos.
 
-**Observação:** Talvez seja interessante que haja uma verificação de tempo. Caso a requisição seja efetuada em um intervalo de tempo previamente acordado, Ok. No entanto, caso o tempo de espera expire, a requisição entraria numa _fila_ (`FIFO`) para que, na próxima vez, fosse enviada juntamente com a requisição atual. Isso seria uma forma de evitar que o sistema pare de funcionar em caso de perde de conexão com a internet. Outra solução seria uma coluna na tabela de pedidos (`Order`) no banco de dados que indicasse quais pedidos já foram enviados e quais não. Assim, poderiasse reenviar os marcados como "_não enviados_" ainda em outra oportunidade.
+**Observação:** É interessante que haja uma verificação de tempo. Caso a requisição seja efetuada em um intervalo de tempo previamente acordado, Ok. No entanto, caso o tempo de espera expire, a requisição entraria numa _fila_ (`FIFO`) para que, na próxima vez, fosse enviada juntamente com a requisição atual. Isso seria uma forma de evitar que o sistema pare de funcionar em caso de perde de conexão com a internet. Outra solução seria uma coluna na tabela de pedidos (`Order`) no banco de dados que indicasse quais pedidos já foram enviados e quais não. Assim, poderiasse reenviar os marcados como "_não enviados_" ainda em outra oportunidade.
 
 ### 3.6 Recomendação de Chás
+Na solução imaginada uma classe seria responsável pela consulta às **regras de negócio**. Pode-se atribuir o nome de `TeaRecommenderer`. E, além disso, o uso do padrão de projeto **Strategy Pattern**. Vamos aos diagramas!
+Com a adição da class `TeaRecommenderer` o diagrama de pacotes ficaria assim:
+
+![pacotes - com reomendação](https://github.com/TomazMartins/tea-store/blob/master/uml/package-plus-recommenderer.png)
+
+Na solução, uma `interface/abstract class` seria criada, contendo o método `recommender_tea()`. Para cada uma das **regras de negócio** um `Strategy` seria elaborada, na forma de uma nova classe que implementaria a `interface/abstract class`. Cada classe implementaria o método `recommender_tea()` à sua maneira, de forma a estar responder corretamente aos critérios da estratégia. Em linhas gerais, uma consulta ao banco de dados com argumentos particulares a cada regra de negócio.
+
+Assim, o `TeaRecommenderer` seria chamado pela _controller_ para fazer recomendações de chás. A forma como o `TeaRecommenderer` fica encapsulada e não há necessidade da _controller_ saber como ele o faz, pois basta o envio do critério de busca. Além disso, fica mais manutenível o código, além de legível. Se uma nova regra de negócio surge, bas adicionar uma nava class `Strategy`.
+
+O diagrama de classes para o `Strategy` ficaria assim:
+
+![strategy](https://github.com/TomazMartins/tea-store/blob/master/uml/strategy-recommenderer.png)
+
+Para visualizar as operações para esta funcionalidade pode-se seguir o diagrama de sequência abaixo:
+
+![pacotes - com reomendação](https://github.com/TomazMartins/tea-store/blob/master/uml/recommendation-teas.png)
 
 [problema]: https://github.com/TomazMartins/tea-store/blob/master/docs/problem.md
